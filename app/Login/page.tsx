@@ -210,7 +210,7 @@ export default function LoginPage() {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="w-full relative group"
+                      className="w-full relative group cursor-pointer"
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 rounded-xl blur-lg opacity-70 group-hover:opacity-100 transition-opacity duration-300"></div>
                       <div className="relative bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg transform group-hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
@@ -242,7 +242,7 @@ export default function LoginPage() {
                       type="button"
                       className="text-white/70 hover:text-white text-sm font-medium hover:underline transition-colors"
                     >
-                      Can't log in? Get help
+                      {/* Can't log in? Get help */}
                     </button>
                   </div>
 

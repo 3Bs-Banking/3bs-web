@@ -403,93 +403,112 @@ export default function BranchPerformance() {
       </div>
 
       <div className="relative z-10 flex">
-        {/* Enhanced Sidebar */}
-        <aside className="w-64 bg-white/10 backdrop-blur-xl border-r border-white/20 text-white p-3 h-screen flex flex-col justify-between shadow-xl">
-          <div>
-            <div className="flex-col flex items-center mb-6">
-              <div className="relative mb-4 mt-8">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl blur-lg opacity-30 animate-pulse"></div>
-                <div className="relative bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                  <Image src="/flags/3bs.png" alt="3B's Logo" width={80} height={80} className="mx-auto" />
-                </div>
-              </div>
-              <p className="leading-none text-lg font-bold text-center text-white">
-                {bankName}
-              </p>
-              <p className="mt-1 text-sm font-medium text-center text-white/70 mb-6">
-                Branch Analytics
-              </p>
-            </div>
-
-            <div className="flex flex-col space-y-3">
-              <button
-                className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
-                onClick={() => router.push("/BankPerformance")}
-              >
-                <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
-                  🏦
-                </div>
-                <span className="font-medium">Bank Performance</span>
-              </button>
-              <button
-                className="text-left bg-gradient-to-r from-purple-600 to-pink-600 text-white p-3 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3"
-                onClick={() => router.push("/BranchPerformance")}
-              >
-                <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                  🏢
-                </div>
-                <span className="font-bold">Branch Performance</span>
-              </button>
-              <button
-                className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
-                onClick={() => router.push("/EmployeePerformance")}
-              >
-                <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center group-hover:bg-green-500/30 transition-colors">
-                  👨‍💼
-                </div>
-                <span className="font-medium">Employee Performance</span>
-              </button>
-              <button
-                className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
-                onClick={() => router.push("/GiveAccess")}
-              >
-                <div className="w-8 h-8 bg-yellow-500/20 rounded-lg flex items-center justify-center group-hover:bg-yellow-500/30 transition-colors">
-                  🔓
-                </div>
-                <span className="font-medium">Give Access</span>
-              </button>
-              <button
-                className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
-                onClick={() => router.push("/settings")}
-              >
-                <div className="w-8 h-8 bg-gray-500/20 rounded-lg flex items-center justify-center group-hover:bg-gray-500/30 transition-colors">
-                  ⚙️
-                </div>
-                <span className="font-medium">Settings</span>
-              </button>
-            </div>
-            
-            <button
-              onClick={async () => {
-                try {
-                  await fetch("http://localhost:5000/api/auth/logout", {
-                    method: "POST",
-                    credentials: "include",
-                  });
-                  router.push("/Login");
-                } catch (err) {
-                  console.error("Logout failed:", err);
-                }
-              }}
-              className="mt-6 w-full text-left p-3 text-red-400 hover:bg-red-500/20 rounded-xl cursor-pointer transition-all duration-300 flex items-center gap-3 group"
-            >
-              <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center group-hover:bg-red-500/30 transition-colors">
-                🔓
-              </div>
-              <span className="font-medium">Logout</span>
-            </button>
-          </div>
-        </aside>
+        {/* Sidebar */}
+                <aside className="w-64 bg-white/10 backdrop-blur-xl border-r border-white/20 text-white p-3 min-h-screen flex flex-col justify-between shadow-xl">
+                  <div>
+                    <div className="flex-col flex items-center mb-6">
+                      <div className="relative mb-4 mt-8">
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl blur-lg opacity-30 animate-pulse"></div>
+                        <div className="relative bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                          <Image 
+                            src="/flags/3bs.png" 
+                            alt="3B's Logo" 
+                            width={80} 
+                            height={80} 
+                            className="mx-auto cursor-pointer"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => window.location.reload()}
+                            title="Refresh Page"
+                          />
+                        </div>
+                      </div>
+                      <p className="leading-none text-lg font-bold text-center text-white">
+                        {bankName}
+                      </p>
+                      <p className="mt-1 text-sm font-medium text-center text-white/70 mb-6">
+                        Branch Performance Portal
+                      </p>
+                    </div>
+        
+                    <div className="flex flex-col space-y-3">
+                      {role !== "Manager" && (
+                        <button 
+                          className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                          onClick={() => router.push("/BankPerformance")}
+                        >
+                          <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
+                            🏦
+                          </div>
+                          <span className="font-medium">Bank Performance</span>
+                        </button>
+                      )}
+                      <button className="text-left bg-gradient-to-r from-orange-600 to-red-600 text-white p-3 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3">
+                       <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                         🏢
+                       </div>
+                       <span className="font-bold">Branch Perfomance</span>
+                     </button>
+                      <button 
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        onClick={() => router.push("/EmployeePerformance")}
+                      >
+                        <div className="w-8 h-8 bg-yellow-500/20 rounded-lg flex items-center justify-center group-hover:bg-yellow-500/30 transition-colors">
+                          👨‍💼
+                        </div>
+                        <span className="font-medium">Employee Performance</span>
+                      </button>
+                      {role !== "Manager" && (
+                        <button 
+                          className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                          onClick={() => router.push("/GiveAccess")}
+                        >
+                          <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
+                            🔓
+                          </div>
+                          <span className="font-medium">Give Access</span>
+                        </button>
+                      )}
+                      <button 
+                       className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                       onClick={() => router.push("/TempAcess")}
+                     >
+                       <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
+                         ⏰
+                       </div>
+                       <span className="font-medium">Temporary Access</span>
+                     </button> 
+                      <button 
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        onClick={() => router.push("/settings")}
+                      >
+                        <div className="w-8 h-8 bg-gray-500/20 rounded-lg flex items-center justify-center group-hover:bg-gray-500/30 transition-colors">
+                          ⚙️
+                        </div>
+                        <span className="font-medium">Settings</span>
+                      </button>
+                    </div>
+                    
+                    <button
+                      onClick={async () => {
+                        try {
+                          await fetch("http://localhost:5000/api/auth/logout", {
+                            method: "POST",
+                            credentials: "include",
+                          });
+                          router.push("/Login");
+                        } catch (err) {
+                          console.error("Logout failed:", err);
+                        }
+                      }}
+                      className="mt-6 w-full text-left p-3 text-red-400 hover:bg-red-500/20 rounded-xl cursor-pointer transition-all duration-300 flex items-center gap-3 group"
+                    >
+                      <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center group-hover:bg-red-500/30 transition-colors">
+                        🔓
+                      </div>
+                      <span className="font-medium">Logout</span>
+                    </button>
+                  </div>
+                </aside>
 
         <div className="flex-1 p-6">
           {/* Enhanced Top Bar */}
@@ -545,7 +564,12 @@ export default function BranchPerformance() {
               </DropdownMenu>
 
               {/* Enhanced Profile Section */}
-              <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-lg border border-white/20">
+              <div 
+                className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-lg border border-white/20 cursor-pointer hover:bg-white/10 transition-all duration-200"
+                onClick={() => router.push("/UserInfo")}
+                title="View User Info"
+                style={{ userSelect: 'none' }}
+              >
                 <Avatar className="w-8 h-8 border-2 border-white/30">
                   <AvatarImage src="/flags/logo.png" />
                   <AvatarFallback className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold">

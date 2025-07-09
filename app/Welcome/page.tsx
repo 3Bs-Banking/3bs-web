@@ -67,6 +67,18 @@ const slideshowItems = [
     gradient: "from-red-600 to-orange-600",
     stats: "Bank-Grade Security"
   },
+  // Temporary Access slide for Admin/Manager only (moved between Give Access and Settings)
+  { 
+    src: "/flags/s4.jpg", 
+    path: "/TempAcess", 
+    alt: "Temporary Access",
+    title: "Temporary Access",
+    description: "Grant or review temporary roles",
+    icon: () => <span style={{fontSize: '2rem', color: 'white', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>⏰</span>,
+    gradient: "from-purple-600 to-pink-600",
+    stats: "Admin/Manager Only",
+    roles: ["Admin", "Manager"]
+  },
   { 
     src: "/flags/s1.jpg", 
     path: "/settings", 
@@ -109,17 +121,34 @@ export default function Welcome() {
     return () => clearInterval(interval);
   }, [isAutoPlay]);
 
-  const nextSlide = () => {
-    setSlideIndex((prevIndex) => (prevIndex + 1) % slideshowItems.length);
-  };
+  // Filter slideshow items for managers/admins
+  const filteredSlideshowItems = slideshowItems.filter(item => {
+    if (item.roles && !item.roles.includes(role)) {
+      return false;
+    }
+    if (role === "Manager") {
+      return item.alt !== "Bank Performance" && item.alt !== "Give Access";
+    }
+    return true;
+  });
 
+  // Clamp slideIndex if filteredSlideshowItems changes
+  useEffect(() => {
+    if (slideIndex >= filteredSlideshowItems.length) {
+      setSlideIndex(0);
+    }
+  }, [filteredSlideshowItems.length, slideIndex]);
+
+  // Navigation functions use filteredSlideshowItems.length
+  const nextSlide = () => {
+    setSlideIndex((prevIndex) => (prevIndex + 1) % filteredSlideshowItems.length);
+  };
   const prevSlide = () => {
     setSlideIndex((prevIndex) =>
-      prevIndex === 0 ? slideshowItems.length - 1 : prevIndex - 1
+      prevIndex === 0 ? filteredSlideshowItems.length - 1 : prevIndex - 1
     );
   };
-
-  const goToSlide = (index: SetStateAction<number>) => {
+  const goToSlide = (index: number) => {
     setSlideIndex(index);
   };
 
@@ -150,10 +179,27 @@ export default function Welcome() {
     }
   };
 
-  const currentSlide = slideshowItems[slideIndex];
-  const IconComponent = currentSlide.icon;
+  // Guard against empty slides
+  if (!mounted || filteredSlideshowItems.length === 0 || slideIndex >= filteredSlideshowItems.length) return null;
+  const currentSlide = filteredSlideshowItems[slideIndex];
+  if (!currentSlide) return null;
+  const IconComponent = typeof currentSlide.icon === 'function' ? currentSlide.icon : undefined;
 
-  if (!mounted) return null;
+  // Define all possible quick access cards
+  const allQuickAccessCards = [
+    { icon: <TrendingUp className="w-6 h-6 text-white" />, title: "Performance Trends", desc: "View latest analytics", color: "from-green-600 to-emerald-600" },
+    { icon: <Users className="w-6 h-6 text-white" />, title: "Team Overview", desc: "Monitor your team", color: "from-blue-600 to-cyan-600" },
+    { icon: <Shield className="w-6 h-6 text-white" />, title: "Security Status", desc: "System protection", color: "from-red-600 to-pink-600" },
+    { icon: <span style={{fontSize: '1.5rem'}}>⏰</span>, title: "Temporary Access", desc: "Grant or review temporary roles", color: "from-purple-600 to-pink-600", path: "/TempAcess", roles: ["Manager", "Admin"] },
+  ];
+
+  // Filter cards based on user role
+  const filteredQuickAccessCards = allQuickAccessCards.filter(card => {
+    if (card.roles && !card.roles.includes(role)) {
+      return false;
+    }
+    return true;
+  });
 
   return (
     <>
@@ -307,8 +353,11 @@ export default function Welcome() {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {/* Profile */}
-              <div className="flex items-center gap-4 p-2 rounded-lg hover:bg-white/10 transition-colors cursor-pointer">
+              {/* Enhanced Profile Section with Click Handler */}
+              <div 
+                className="flex items-center gap-4 p-2 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+                onClick={() => router.push('/UserInfo')}
+              >
                 <Avatar className="w-12 h-12 border-2 border-white/20">
                   <AvatarImage src="/flags/logo.png" />
                   <AvatarFallback className="bg-purple-600 text-white font-bold">{firstName?.[0]}</AvatarFallback>
@@ -374,7 +423,7 @@ export default function Welcome() {
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-3">
                             <div className={`p-3 rounded-xl bg-gradient-to-r ${currentSlide.gradient} shadow-lg float`}>
-                              <IconComponent className="w-8 h-8 text-white" />
+                              {IconComponent ? <span className="w-8 h-8 flex items-center justify-center"><IconComponent /></span> : <currentSlide.icon className="w-8 h-8 text-white" />}
                             </div>
                             <div className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full border border-white/30">
                               <span className="text-sm font-medium text-white">{currentSlide.stats}</span>
@@ -415,7 +464,7 @@ export default function Welcome() {
 
               {/* Enhanced Slide Indicators */}
               <div className="flex justify-center items-center gap-4 mb-8">
-                {slideshowItems.map((item, index) => {
+                {filteredSlideshowItems.map((item, index) => {
                   const ItemIcon = item.icon;
                   return (
                     <button
@@ -460,18 +509,15 @@ export default function Welcome() {
 
             {/* Quick Access Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-              {[
-                { icon: TrendingUp, title: "Performance Trends", desc: "View latest analytics", color: "from-green-600 to-emerald-600" },
-                { icon: Users, title: "Team Overview", desc: "Monitor your team", color: "from-blue-600 to-cyan-600" },
-                { icon: Shield, title: "Security Status", desc: "System protection", color: "from-red-600 to-pink-600" }
-              ].map((card, index) => (
+              {filteredQuickAccessCards.map((card, index) => (
                 <div 
                   key={index} 
                   className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 hover:scale-105 cursor-pointer group fade-in"
                   style={{ animationDelay: `${index * 0.2}s` }}
+                  onClick={card.path ? () => router.push(card.path) : undefined}
                 >
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${card.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                    <card.icon className="w-6 h-6 text-white" />
+                    {card.icon}
                   </div>
                   <h3 className="text-lg font-semibold text-white mb-2">{card.title}</h3>
                   <p className="text-white/70 text-sm">{card.desc}</p>
