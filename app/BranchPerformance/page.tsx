@@ -52,6 +52,7 @@ export default function BranchPerformance() {
   const [branches, setBranches] = useState<Branch[]>([]);
   const [selectedBranch, setSelectedBranch] = useState<string>("");
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
   const [tasksCompleted, setTasksCompleted] = useState(0);
   const [strongestEmployees, setStrongestEmployees] = useState<{ name: string; score: number }[]>([]);
   const [weakestEmployees, setWeakestEmployees] = useState<{ name: string; score: number }[]>([]);
@@ -86,6 +87,11 @@ export default function BranchPerformance() {
   // Loading state
   const [loading, setLoading] = useState(true);
   const [loadingMessage, setLoadingMessage] = useState("Initializing...");
+
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
 
   const changeLanguage = (lang: string) => {
     if (lang === "Eng (US)") {
@@ -152,28 +158,28 @@ export default function BranchPerformance() {
 
         setLoadingMessage("Calculating performance metrics...");
 
-        // ✅ Get ALL completed appointments for the selected YEAR and branch
-        const yearCompleted = appointments.filter(a =>
+        // ✅ Get ALL completed appointments for the selected MONTH and branch
+        const monthCompleted = appointments.filter(a =>
           a.status === "Completed" &&
           a.branch?.id === branchId &&
-          new Date(a.createdAt).getFullYear() === selectedYear
+          new Date(a.createdAt).getFullYear() === selectedYear &&
+          new Date(a.createdAt).getMonth() === selectedMonth
         );
 
-        // ✅ ALL METRICS NOW USE YEAR-WIDE DATA
+        // ✅ ALL METRICS NOW USE MONTH-WIDE DATA
 
-        // 1. Total Tasks Completed (WHOLE YEAR)
-        setTasksCompleted(yearCompleted.length);
+        // 1. Total Tasks Completed (WHOLE MONTH)
+        setTasksCompleted(monthCompleted.length);
 
-        // 2. Footfall (WHOLE YEAR - average per day)
-        const isLeapYear = selectedYear % 4 === 0 && (selectedYear % 100 !== 0 || selectedYear % 400 === 0);
-        const daysInYear = isLeapYear ? 366 : 365;
-        const workingDaysInYear = Math.floor(daysInYear * 5/7); // Approximate working days (5/7 of year)
-        setFootfall(workingDaysInYear > 0 ? Math.round(yearCompleted.length / workingDaysInYear) : 0);
+        // 2. Footfall (WHOLE MONTH - average per day)
+        const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
+        const workingDaysInMonth = Math.floor(daysInMonth * 5/7); // Approximate working days (5/7 of month)
+        setFootfall(workingDaysInMonth > 0 ? Math.round(monthCompleted.length / workingDaysInMonth) : 0);
 
-        // 3. Average Queue Handling Time (WHOLE YEAR)
+        // 3. Average Queue Handling Time (WHOLE MONTH)
         let totalMs = 0;
         let validTimeCount = 0;
-        yearCompleted.forEach(appt => {
+        monthCompleted.forEach(appt => {
           if (appt.appointmentStartTime && appt.appointmentEndTime) {
             const start = new Date(`1970-01-01T${appt.appointmentStartTime}`);
             const end = new Date(`1970-01-01T${appt.appointmentEndTime}`);
@@ -189,8 +195,8 @@ export default function BranchPerformance() {
         const avgSecs = Math.floor((avgMs % 60000) / 1000);
         setAvgQueueTime(`${avgMins}m ${avgSecs}s`);
 
-        // 4. Average Service Deviation (WHOLE YEAR)
-        const deviations = yearCompleted
+        // 4. Average Service Deviation (WHOLE MONTH)
+        const deviations = monthCompleted
           .map(appt => {
             if (!appt.appointmentStartTime || !appt.appointmentEndTime) return null;
             const start = new Date(`1970-01-01T${appt.appointmentStartTime}`);
@@ -204,8 +210,8 @@ export default function BranchPerformance() {
         const avgDeviation = deviations.length > 0 ? deviations.reduce((a, b) => a + b, 0) / deviations.length : 0;
         setServiceDeviation(Math.round(Math.abs(avgDeviation)));
 
-        // 5. Time Resolution Rating (WHOLE YEAR)
-        const timeRatings = yearCompleted
+        // 5. Time Resolution Rating (WHOLE MONTH)
+        const timeRatings = monthCompleted
           .map(appt => {
             const fb = feedbacks.find(f => f.appointment?.id === appt.id);
             return fb?.timeResolutionRating ?? 0;
@@ -215,10 +221,10 @@ export default function BranchPerformance() {
         const avgTimeRating = timeRatings.length > 0 ? timeRatings.reduce((a, b) => a + b, 0) / timeRatings.length : 0;
         setTimeResolutionRating(Math.round(avgTimeRating * 20)); // Convert to percentage
 
-        // 6. Employee Efficiency Score (WHOLE YEAR)
+        // 6. Employee Efficiency Score (WHOLE MONTH)
         let totalNorm = 0, totalSat = 0, totalRes = 0, validScoreCount = 0;
         
-        yearCompleted.forEach(a => {
+        monthCompleted.forEach(a => {
           if (a.appointmentStartDate && a.appointmentStartTime && a.appointmentEndDate && a.appointmentEndTime) {
             const start = new Date(`${a.appointmentStartDate}T${a.appointmentStartTime}`);
             const end = new Date(`${a.appointmentEndDate}T${a.appointmentEndTime}`);
@@ -250,8 +256,13 @@ export default function BranchPerformance() {
 
         setLoadingMessage("Generating activity charts...");
 
-        // ✅ Activity Chart (WHOLE YEAR)
+        // ✅ Activity Chart (WHOLE YEAR - for trend analysis)
         const monthlyCounts = Array(12).fill(0);
+        const yearCompleted = appointments.filter(a =>
+          a.status === "Completed" &&
+          a.branch?.id === branchId &&
+          new Date(a.createdAt).getFullYear() === selectedYear
+        );
         yearCompleted.forEach(appt => {
           const month = new Date(appt.createdAt).getMonth();
           monthlyCounts[month]++;
@@ -261,11 +272,11 @@ export default function BranchPerformance() {
 
         setLoadingMessage("Analyzing employee performance...");
 
-        // ✅ Employee Rankings (WHOLE YEAR)
+        // ✅ Employee Rankings (WHOLE MONTH)
         const empScores = employees
           .filter(e => e.branch?.id === branchId)
           .map(emp => {
-            const empAppts = yearCompleted.filter(a => a.employee?.id === emp.id);
+            const empAppts = monthCompleted.filter(a => a.employee?.id === emp.id);
             
             let normSum = 0, satSum = 0, resSum = 0, empValidCount = 0;
             
@@ -321,7 +332,7 @@ export default function BranchPerformance() {
     }
 
     fetchData();
-  }, [selectedBranch, selectedYear]);
+  }, [selectedBranch, selectedYear, selectedMonth]);
 
   // Enhanced Loading Screen Component
   if (loading) {
@@ -432,15 +443,15 @@ export default function BranchPerformance() {
         
                     <div className="flex flex-col space-y-3">
                       {role !== "Manager" && (
-                        <button 
-                          className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
-                          onClick={() => router.push("/BankPerformance")}
-                        >
-                          <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
-                            🏦
-                          </div>
-                          <span className="font-medium">Bank Performance</span>
-                        </button>
+                      <button 
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        onClick={() => router.push("/BankPerformance")}
+                      >
+                        <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
+                          🏦
+                        </div>
+                        <span className="font-medium">Bank Performance</span>
+                      </button>
                       )}
                       <button className="text-left bg-gradient-to-r from-orange-600 to-red-600 text-white p-3 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3">
                        <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
@@ -458,15 +469,15 @@ export default function BranchPerformance() {
                         <span className="font-medium">Employee Performance</span>
                       </button>
                       {role !== "Manager" && (
-                        <button 
-                          className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
-                          onClick={() => router.push("/GiveAccess")}
-                        >
-                          <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
-                            🔓
-                          </div>
-                          <span className="font-medium">Give Access</span>
-                        </button>
+                      <button 
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        onClick={() => router.push("/GiveAccess")}
+                      >
+                        <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
+                          🔓
+                        </div>
+                        <span className="font-medium">Give Access</span>
+                      </button>
                       )}
                       <button 
                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
@@ -599,7 +610,7 @@ export default function BranchPerformance() {
             <div className="mt-4 h-1 w-32 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto"></div>
           </div>
 
-          {/* Enhanced Year and Branch Selectors */}
+          {/* Enhanced Year, Month and Branch Selectors */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-grow mb-6">
             <div className="w-80 gap-2 mt-2">
               <Dropdown
@@ -608,6 +619,18 @@ export default function BranchPerformance() {
                 selected={selectedYear.toString()}
                 onSelect={(value) => setSelectedYear(parseInt(value))}
               />
+            </div>
+            
+            <div className="w-80 gap-2 mt-2">
+                              <Dropdown
+                  label="Month:"
+                  options={monthNames}
+                  selected={monthNames[selectedMonth]}
+                  onSelect={(value) => {
+                    const monthIndex = monthNames.indexOf(value);
+                    setSelectedMonth(monthIndex);
+                  }}
+                />
             </div>
             
             <div className="w-80 gap-2 mt-2">
@@ -623,11 +646,11 @@ export default function BranchPerformance() {
           {/* Enhanced Performance Summary */}
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-xl mb-6">
             <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-              <Sparkles className="w-6 h-6 text-yellow-400" />
-              {selectedBranch} - {selectedYear} Performance Summary
+              <BarChart3 className="w-6 h-6 text-blue-400" />
+              {selectedBranch} - {monthNames[selectedMonth]} {selectedYear} Performance Summary
             </h4>
             <p className="text-white/70">
-              All metrics below reflect year-wide performance for {selectedYear}
+              All metrics below reflect month-wide performance for {monthNames[selectedMonth]} {selectedYear}
             </p>
           </div>
 
@@ -642,7 +665,7 @@ export default function BranchPerformance() {
                   </div>
                   <p className="text-sm text-white/80 font-medium">Total Tasks Completed</p>
                   <p className="text-3xl font-bold text-blue-400 my-2">{tasksCompleted}</p>
-                  <p className="text-xs text-white/60">Whole year {selectedYear}</p>
+                  <p className="text-xs text-white/60">{monthNames[selectedMonth]} {selectedYear}</p>
                 </CardContent>
               </Card>
               
@@ -653,7 +676,7 @@ export default function BranchPerformance() {
                   </div>
                   <p className="text-sm text-white/80 font-medium">Average Queue Time</p>
                   <p className="text-3xl font-bold text-green-400 my-2">{avgQueueTime}</p>
-                  <p className="text-xs text-white/60">Year average</p>
+                  <p className="text-xs text-white/60">{monthNames[selectedMonth]} average</p>
                 </CardContent>
               </Card>
               
@@ -675,7 +698,7 @@ export default function BranchPerformance() {
                   </div>
                   <p className="text-sm text-white/80 font-medium">Service Deviation</p>
                   <p className="text-3xl font-bold text-orange-400 my-2">{serviceDeviation}%</p>
-                  <p className="text-xs text-white/60">Year average</p>
+                  <p className="text-xs text-white/60">{monthNames[selectedMonth]} average</p>
                 </CardContent>
               </Card>
               
@@ -686,7 +709,7 @@ export default function BranchPerformance() {
                   </div>
                   <p className="text-sm text-white/80 font-medium">Resolution Rating</p>
                   <p className="text-3xl font-bold text-red-400 my-2">{timeResolutionRating}%</p>
-                  <p className="text-xs text-white/60">Year average</p>
+                  <p className="text-xs text-white/60">{monthNames[selectedMonth]} average</p>
                 </CardContent>
               </Card>
               
@@ -697,7 +720,7 @@ export default function BranchPerformance() {
                   </div>
                   <p className="text-sm text-white/80 font-medium">Efficiency Score</p>
                   <p className="text-3xl font-bold text-indigo-400 my-2">{efficiencyScore}%</p>
-                  <p className="text-xs text-white/60">Year average</p>
+                  <p className="text-xs text-white/60">{monthNames[selectedMonth]} average</p>
                 </CardContent>
               </Card>
             </div>
@@ -745,7 +768,7 @@ export default function BranchPerformance() {
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-white font-semibold flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-red-400 rotate-180" />
-                  Improvement Needed ({selectedYear})
+                  Improvement Needed ({monthNames[selectedMonth]} {selectedYear})
                 </h3>
               </div>
               {weakestEmployees.length > 0 ? weakestEmployees.map((emp) => (
@@ -779,7 +802,7 @@ export default function BranchPerformance() {
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-white font-semibold flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-green-400" />
-                  Top Performers ({selectedYear})
+                  Top Performers ({monthNames[selectedMonth]} {selectedYear})
                 </h3>
               </div>
               {strongestEmployees.length > 0 ? strongestEmployees.map((emp) => (
@@ -884,7 +907,7 @@ export default function BranchPerformance() {
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-white mb-2">📊 Branch Performance Summary</h3>
                   <p className="text-indigo-200 leading-relaxed">
-                    {selectedBranch} processed <strong>{tasksCompleted} tasks</strong> in {selectedYear} with an 
+                    {selectedBranch} processed <strong>{tasksCompleted} tasks</strong> in {monthNames[selectedMonth]} {selectedYear} with an 
                     average queue time of <strong>{avgQueueTime}</strong> and serves approximately{' '}
                     <strong>{footfall} customers daily</strong>. The branch maintains an efficiency score of{' '}
                     <strong>{efficiencyScore}%</strong> with a <strong>{timeResolutionRating}% resolution rating</strong>,

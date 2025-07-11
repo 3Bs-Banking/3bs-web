@@ -15,14 +15,14 @@ import {
   ChevronLeft, 
   ChevronRight, 
   Play, 
-  Sparkles, 
   TrendingUp, 
   Users, 
   Building, 
   Shield,
   Settings,
   BarChart3,
-  ArrowRight
+  ArrowRight,
+  Sparkles
 } from "lucide-react";
 import TopBarSearch from "@/components/ui/TopBarSearch";
 
@@ -375,13 +375,9 @@ export default function Welcome() {
             {/* Section Header */}
             <div className="text-center mb-12 fade-in">
               <div className="inline-flex items-center gap-2 mb-4">
-                <Sparkles className="w-8 h-8 text-yellow-400 animate-spin" style={{ animationDuration: '3s' }} />
-                <h2 className="text-4xl font-bold text-white">Explore Your Dashboard</h2>
-                <Sparkles className="w-8 h-8 text-yellow-400 animate-spin" style={{ animationDuration: '3s', animationDelay: '1.5s' }} />
+                
               </div>
-              <p className="text-xl text-white/80 max-w-2xl mx-auto">
-                Discover powerful analytics and insights across all areas of your banking operations
-              </p>
+              
             </div>
 
             {/* Main Slideshow Container */}

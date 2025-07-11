@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 // Badge component removed - using custom styling instead
-import { Bell, Search, TrendingUp, TrendingDown, Clock, CheckCircle, Filter, Download, Eye, Shield, Sparkles, Zap, BarChart3, Activity } from "lucide-react";
+import { Bell, Search, TrendingUp, TrendingDown, Clock, CheckCircle, Filter, Download, Eye, Shield, BarChart3, Activity, Zap } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
@@ -205,27 +205,6 @@ export default function EnhancedEmployeePerformance() {
   const avgTasks = employees.length > 0 ? Math.round(employees.reduce((sum, e) => sum + e.tasks, 0) / employees.length) : 0;
   const avgEfficiency = employees.length > 0 ? Math.round(employees.reduce((sum, e) => sum + e.efficiency, 0) / employees.length) : 0;
 
-  const getPerformanceBadge = (performance: "high" | "medium" | "low") => {
-    const variants = {
-      high: "bg-green-100 text-green-800 border border-green-200",
-      medium: "bg-yellow-100 text-yellow-800 border border-yellow-200", 
-      low: "bg-red-100 text-red-800 border border-red-200"
-    };
-    const labels = { high: "High Performer", medium: "Average", low: "Needs Improvement" };
-    
-    return (
-      <span className={`${variants[performance]} px-2 py-1 rounded-full text-xs font-medium`}>
-        {labels[performance]}
-      </span>
-    );
-  };
-
-  const getTrendIcon = (trend: "up" | "down" | "stable") => {
-    if (trend === "up") return <TrendingUp className="w-4 h-4 text-green-500" />;
-    if (trend === "down") return <TrendingDown className="w-4 h-4 text-red-500" />;
-    return <div className="w-4 h-4 bg-gray-400 rounded-full" />;
-  };
-
   // Enhanced Loading Screen Component
   if (loading) {
     return (
@@ -335,15 +314,15 @@ export default function EnhancedEmployeePerformance() {
         
                     <div className="flex flex-col space-y-3">
                       {role !== "Manager" && (
-                        <button 
-                          className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
-                          onClick={() => router.push("/BankPerformance")}
-                        >
-                          <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
-                            🏦
-                          </div>
-                          <span className="font-medium">Bank Performance</span>
-                        </button>
+                      <button 
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        onClick={() => router.push("/BankPerformance")}
+                      >
+                        <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
+                          🏦
+                        </div>
+                        <span className="font-medium">Bank Performance</span>
+                      </button>
                       )}
                       <button 
                         className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
@@ -361,15 +340,15 @@ export default function EnhancedEmployeePerformance() {
                        <span className="font-bold">Employee Perfomance</span>
                      </button>
                       {role !== "Manager" && (
-                        <button 
-                          className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
-                          onClick={() => router.push("/GiveAccess")}
-                        >
-                          <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
-                            🔓
-                          </div>
-                          <span className="font-medium">Give Access</span>
-                        </button>
+                      <button 
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        onClick={() => router.push("/GiveAccess")}
+                      >
+                        <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
+                          🔓
+                        </div>
+                        <span className="font-medium">Give Access</span>
+                      </button>
                       )}
                       <button 
                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
@@ -638,9 +617,6 @@ export default function EnhancedEmployeePerformance() {
                       >
                         Avg Handling Time
                       </th>
-                      <th className="p-4 text-left text-white/90 font-semibold">Performance</th>
-                      <th className="p-4 text-left text-white/90 font-semibold">Efficiency</th>
-                      <th className="p-4 text-left text-white/90 font-semibold">Trend</th>
                       <th className="p-4 text-left text-white/90 font-semibold">Actions</th>
                     </tr>
                   </thead>
@@ -671,21 +647,6 @@ export default function EnhancedEmployeePerformance() {
                           <div className="flex items-center gap-2">
                             <Clock className="w-4 h-4 text-white/60" />
                             <span className="font-medium text-white">{employee.time}</span>
-                          </div>
-                        </td>
-                        <td className="p-4">
-                          {getPerformanceBadge(employee.performance)}
-                        </td>
-                        <td className="p-4">
-                          <div className="flex items-center gap-3">
-                            <Progress value={employee.efficiency} className="w-20 h-2" />
-                            <span className="text-sm font-medium text-white">{employee.efficiency}%</span>
-                          </div>
-                        </td>
-                        <td className="p-4">
-                          <div className="flex items-center gap-2">
-                            {getTrendIcon(employee.trend)}
-                            <span className="text-sm capitalize text-white/70">{employee.trend}</span>
                           </div>
                         </td>
                         <td className="p-4">

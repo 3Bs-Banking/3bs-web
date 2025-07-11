@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { 
   Clock, Bell, Search, User, Lock, Shield, Eye, EyeOff, 
   CheckCircle, AlertTriangle, Info, Calendar, Timer, 
-  UserCheck, Sparkles, Zap
+  UserCheck, Sparkles
 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
@@ -138,7 +138,7 @@ const [role, setRole] = useState<string>("");
           setError(`Please write the ID of an employee, not a ${user.role}.`);
         } else {
           setEmployeeInfo(user);
-          setError("");
+        setError("");
         }
       } else {
         setEmployeeInfo(null);
@@ -185,9 +185,9 @@ const [role, setRole] = useState<string>("");
       const submitData = {
   userId: employeeInfo.id,
   newRole: role,
-  expiresAt: expirationDateTime.toISOString(),
+        expiresAt: expirationDateTime.toISOString(),
   password: adminPassword
-};
+      };
 
       const result = await temporaryAccessAPI.grantTemporaryAccess(submitData);
       
@@ -423,15 +423,15 @@ useEffect(() => {
 
             <div className="flex flex-col space-y-3">
               {role !== "Manager" && (
-                <button 
-                  className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
-                  onClick={() => router.push("/BankPerformance")}
-                >
-                  <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
-                    🏦
-                  </div>
-                  <span className="font-medium">Bank Performance</span>
-                </button>
+              <button 
+                className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                onClick={() => router.push("/BankPerformance")}
+              >
+                <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
+                  🏦
+                </div>
+                <span className="font-medium">Bank Performance</span>
+              </button>
               )}
               <button 
                 className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
@@ -452,15 +452,15 @@ useEffect(() => {
                 <span className="font-medium">Employee Performance</span>
               </button>
               {role !== "Manager" && (
-                <button 
-                  className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
-                  onClick={() => router.push("/GiveAccess")}
-                >
-                  <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
-                    🔓
-                  </div>
-                  <span className="font-medium">Give Access</span>
-                </button>
+              <button 
+                className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                onClick={() => router.push("/GiveAccess")}
+              >
+                <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
+                  🔓
+                </div>
+                <span className="font-medium">Give Access</span>
+              </button>
               )}
               <button 
                 className="text-left bg-gradient-to-r from-orange-600 to-red-600 text-white p-3 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3"
@@ -750,7 +750,7 @@ useEffect(() => {
                       <div className="mt-6 p-4 bg-gradient-to-r from-orange-500/20 to-red-500/20 border border-orange-400/30 rounded-xl backdrop-blur-sm">
                         <div className="flex items-start gap-3">
                           <div className="w-8 h-8 bg-orange-500/30 rounded-lg flex items-center justify-center">
-                            <Sparkles className="w-5 h-5 text-orange-300" />
+                            <CheckCircle className="w-5 h-5 text-orange-300" />
                           </div>
                           <div>
                             <p className="text-lg font-bold text-orange-200 mb-2">⏰ Access Summary</p>
@@ -857,7 +857,7 @@ useEffect(() => {
                         4
                       </div>
                       <Label className="text-lg font-bold text-white flex items-center gap-3">
-                        <Zap className="w-6 h-6 text-green-400" />
+                        <CheckCircle className="w-6 h-6 text-green-400" />
                         Final Confirmation
                       </Label>
                     </div>
@@ -916,7 +916,7 @@ useEffect(() => {
                           </>
                         ) : (
                           <>
-                            <Zap className="w-6 h-6" />
+                            <CheckCircle className="w-6 h-6" />
                             Grant Temporary Access
                           </>
                         )}

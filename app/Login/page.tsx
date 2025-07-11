@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Eye, EyeOff, Mail, Lock, ArrowRight, Shield, Sparkles, CheckCircle2 } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowRight, Shield, CheckCircle2, Sparkles } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -283,7 +283,7 @@ export default function LoginPage() {
                   <div className="mb-8 relative">
                     <div className="absolute inset-0 bg-white/20 rounded-full blur-2xl animate-pulse"></div>
                     <div className="relative w-24 h-24 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center">
-                      <Sparkles className="w-12 h-12 text-white animate-spin" style={{ animationDuration: '3s' }} />
+                      <Sparkles className="w-12 h-12 text-white/30" />
                     </div>
                   </div>
 

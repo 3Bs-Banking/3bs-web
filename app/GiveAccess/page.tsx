@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UploadCloud, Bell, Mail, Search, ChevronDown, User, Lock, Building, MapPin, Shield, Eye, EyeOff, Copy, CheckCircle, AlertTriangle, Info, TrendingUp, UserPlus, Sparkles, Zap } from "lucide-react";
+import { UploadCloud, Bell, Mail, Search, ChevronDown, User, Lock, Building, MapPin, Shield, Eye, EyeOff, Copy, CheckCircle, AlertTriangle, Info, TrendingUp, UserPlus, Zap, Sparkles } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -505,15 +505,15 @@ const generateEmailPreview = (): string => {
         
                     <div className="flex flex-col space-y-3">
                       {role !== "Manager" && (
-                        <button 
-                          className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
-                          onClick={() => router.push("/BankPerformance")}
-                        >
-                          <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
-                            🏦
-                          </div>
-                          <span className="font-medium">Bank Performance</span>
-                        </button>
+                      <button 
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        onClick={() => router.push("/BankPerformance")}
+                      >
+                        <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
+                          🏦
+                        </div>
+                        <span className="font-medium">Bank Performance</span>
+                      </button>
                       )}
                       <button 
                         className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
@@ -537,13 +537,13 @@ const generateEmailPreview = (): string => {
 
                       {role !== "Manager" && (
                         <button 
-                          className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
-                          onClick={() => router.push("/GiveAccess")}
-                        >
-                          <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
-                            🔓
-                          </div>
-                          <span className="font-medium">Give Access</span>
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        onClick={() => router.push("/GiveAccess")}
+                      >
+                        <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
+                          🔓
+                        </div>
+                        <span className="font-medium">Give Access</span>
                         </button>
                       )}
                       <button className="text-left bg-gradient-to-r from-orange-600 to-red-600 text-white p-3 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3">
@@ -692,7 +692,7 @@ const generateEmailPreview = (): string => {
                     {/* Enhanced Access Type Selection */}
                     <div className="mb-10">
                       <Label className="text-lg font-bold text-white flex items-center gap-3 mb-6">
-                        <Sparkles className="w-6 h-6 text-yellow-400" />
+                        <TrendingUp className="w-6 h-6 text-yellow-400" />
                         Choose Access Type
                       </Label>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

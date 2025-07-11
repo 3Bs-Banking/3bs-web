@@ -12,6 +12,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import { 
   Bell, 
   ArrowLeft,
@@ -28,10 +29,9 @@ import {
   Copy,
   CheckCircle,
   Settings,
-  Sparkles,
-  Crown,
   Star,
-  Activity
+  Activity,
+  Sparkles
 } from "lucide-react";
 import TopBarSearch from "@/components/ui/TopBarSearch";
 
@@ -73,6 +73,17 @@ export default function UserInfo() {
   const [showUserId, setShowUserId] = useState(false);
   const [copiedField, setCopiedField] = useState('');
 
+  // Add state for password change
+  const [showPasswordSection, setShowPasswordSection] = useState(false);
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordStep, setPasswordStep] = useState<'verify' | 'set'>("verify");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordSuccess, setPasswordSuccess] = useState("");
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
   const changeLanguage = (lang: string) => {
     if (lang.includes("Eng")) {
       setLanguage("English (US)");
@@ -102,7 +113,7 @@ export default function UserInfo() {
   const getRoleIcon = (role: string) => {
     switch (role.toLowerCase()) {
       case 'admin':
-        return <Crown className="w-5 h-5 text-yellow-400" />;
+        return <Shield className="w-5 h-5 text-yellow-400" />;
       case 'manager':
         return <Star className="w-5 h-5 text-blue-400" />;
       case 'employee':
@@ -538,6 +549,122 @@ export default function UserInfo() {
                 </div>
               </CardContent>
             </Card>
+            {/* Change Password Card */}
+            <Card className="bg-white/10 backdrop-blur-xl border border-white/20">
+              <CardContent className="p-8">
+                <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                  <Shield className="w-7 h-7 text-purple-400" />
+                  Change Password
+                </h2>
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    setPasswordError("");
+                    setPasswordSuccess("");
+                    if (passwordStep === "verify") {
+                      setIsVerifying(true);
+                      try {
+                        const res = await fetch("http://localhost:5000/api/user/verify-password", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          credentials: "include",
+                          body: JSON.stringify({ password: oldPassword })
+                        });
+                        const data = await res.json();
+                        if (!res.ok || !data.success) {
+                          setPasswordError(data.message || "Old password is incorrect");
+                        } else {
+                          setPasswordStep("set");
+                          setPasswordSuccess("");
+                        }
+                      } catch (err) {
+                        setPasswordError("Failed to verify password. Try again.");
+                      } finally {
+                        setIsVerifying(false);
+                      }
+                    } else if (passwordStep === "set") {
+                      if (!newPassword || !confirmPassword) {
+                        setPasswordError("Please fill in all fields.");
+                        return;
+                      }
+                      if (newPassword !== confirmPassword) {
+                        setPasswordError("Passwords do not match.");
+                        return;
+                      }
+                      setIsSaving(true);
+                      try {
+                        const res = await fetch("http://localhost:5000/api/user/change-password", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          credentials: "include",
+                          body: JSON.stringify({ oldPassword, newPassword })
+                        });
+                        const data = await res.json();
+                        if (!res.ok || !data.success) {
+                          setPasswordError(data.message || "Failed to change password");
+                        } else {
+                          setPasswordSuccess("Password changed successfully!");
+                          setOldPassword("");
+                          setNewPassword("");
+                          setConfirmPassword("");
+                          setPasswordStep("verify");
+                        }
+                      } catch (err) {
+                        setPasswordError("Failed to change password. Try again.");
+                      } finally {
+                        setIsSaving(false);
+                      }
+                    }
+                  }}
+                  className="space-y-6"
+                >
+                  {passwordStep === "verify" && (
+                    <div className="space-y-4">
+                      <label className="block text-white/80 font-medium">Old Password</label>
+                      <Input
+                        type="password"
+                        value={oldPassword}
+                        onChange={e => setOldPassword(e.target.value)}
+                        className="bg-white/5 border border-white/20 text-white"
+                        required
+                      />
+                      <Button
+                        type="submit"
+                        className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 text-white py-4 px-8 rounded-xl font-bold shadow-2xl hover:shadow-purple-500/25 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-lg w-full mt-2"
+                        disabled={isVerifying}
+                      >
+                        {isVerifying ? "Verifying..." : "Verify"}
+                      </Button>
+                    </div>
+                  )}
+                  {passwordStep === "set" && (
+                    <div className="space-y-4">
+                      <label className="block text-white/80 font-medium">New Password</label>
+                      <Input
+                        type="password"
+                        value={newPassword}
+                        onChange={e => setNewPassword(e.target.value)}
+                        className="bg-white/5 border border-white/20 text-white"
+                        required
+                      />
+                      <label className="block text-white/80 font-medium">Confirm New Password</label>
+                      <Input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={e => setConfirmPassword(e.target.value)}
+                        className="bg-white/5 border border-white/20 text-white"
+                        required
+                      />
+                      <Button type="submit" className="bg-purple-600 hover:bg-purple-700 w-full mt-2" disabled={isSaving}>
+                        {isSaving ? "Saving..." : "Save Changes"}
+                      </Button>
+                    </div>
+                  )}
+                  {passwordError && <div className="text-red-400 font-medium mt-2">{passwordError}</div>}
+                  {passwordSuccess && <div className="text-green-400 font-medium mt-2">{passwordSuccess}</div>}
+                </form>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Account Summary Card */}
@@ -545,7 +672,7 @@ export default function UserInfo() {
             <CardContent className="p-8">
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 bg-indigo-500/30 rounded-xl flex items-center justify-center">
-                  <Sparkles className="w-8 h-8 text-indigo-300" />
+                  <Shield className="w-8 h-8 text-indigo-300" />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-2xl font-bold text-white mb-4">Account Summary</h3>

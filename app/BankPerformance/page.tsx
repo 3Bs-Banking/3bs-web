@@ -22,11 +22,11 @@ import {
   Shield, 
   Building, 
   BarChart3, 
-  Sparkles, 
   Zap, 
   Activity, 
   DollarSign, 
-  AlertTriangle 
+  AlertTriangle,
+  Sparkles
 } from "lucide-react";
 import {
   LineChart,
