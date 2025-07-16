@@ -506,7 +506,7 @@ const generateEmailPreview = (): string => {
                     <div className="flex flex-col space-y-3">
                       {role !== "Manager" && (
                       <button 
-                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                         onClick={() => router.push("/BankPerformance")}
                       >
                         <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
@@ -516,7 +516,7 @@ const generateEmailPreview = (): string => {
                       </button>
                       )}
                       <button 
-                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                         onClick={() => router.push("/BranchPerformance")}
                       >
                         <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center group-hover:bg-green-500/30 transition-colors">
@@ -525,7 +525,7 @@ const generateEmailPreview = (): string => {
                         <span className="font-medium">Branch Performance</span>
                       </button>
                       <button 
-                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                         onClick={() => router.push("/EmployeePerformance")}
                       >
                         <div className="w-8 h-8 bg-yellow-500/20 rounded-lg flex items-center justify-center group-hover:bg-yellow-500/30 transition-colors">
@@ -537,7 +537,7 @@ const generateEmailPreview = (): string => {
 
                       {role !== "Manager" && (
                         <button 
-                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                         onClick={() => router.push("/GiveAccess")}
                       >
                         <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
@@ -546,14 +546,14 @@ const generateEmailPreview = (): string => {
                         <span className="font-medium">Give Access</span>
                         </button>
                       )}
-                      <button className="text-left bg-gradient-to-r from-orange-600 to-red-600 text-white p-3 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3">
+                      {/* <button className="text-left bg-gradient-to-r from-orange-600 to-red-600 text-white p-3 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3 cursor-pointer">
                 <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
                   ⏰
                 </div>
                 <span className="font-bold">Give Access</span>
-              </button>
+              </button> */}
                       <button 
-                       className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                       className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                        onClick={() => router.push("/TempAcess")}
                      >
                        <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
@@ -562,7 +562,7 @@ const generateEmailPreview = (): string => {
                        <span className="font-medium">Temporary Access</span>
                      </button>  
                       <button 
-                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                         onClick={() => router.push("/settings")}
                       >
                         <div className="w-8 h-8 bg-gray-500/20 rounded-lg flex items-center justify-center group-hover:bg-gray-500/30 transition-colors">
@@ -584,7 +584,7 @@ const generateEmailPreview = (): string => {
                           console.error("Logout failed:", err);
                         }
                       }}
-                      className="mt-6 w-full text-left p-3 text-red-400 hover:bg-red-500/20 rounded-xl cursor-pointer transition-all duration-300 flex items-center gap-3 group"
+                      className="mt-6 w-full text-left p-3 text-red-400 hover:bg-red-500/20 rounded-xl cursor-pointer transition-all duration-300 flex items-center gap-3 group cursor-pointer"
                     >
                       <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center group-hover:bg-red-500/30 transition-colors">
                         🔓

@@ -41,7 +41,6 @@ import {
 } from "recharts";
 import { fetchAPI } from "@/utils/fetchAPI";
 
-// ----- Types & Helpers -----
 interface Customer {
   id: string;
   preferred_branch_id: string;
@@ -83,7 +82,6 @@ function getGroupKey(date: Date, tf: Timeframe): string {
   return monthNames[date.getMonth()];
 }
 
-// ----- Component -----
 export default function BankDashboard() {
   const router = useRouter();
   const [branches, setBranches] = useState<Branch[]>([]);
@@ -162,9 +160,8 @@ export default function BankDashboard() {
         setSelectedBranch(activeBranch?.name || "");
 
         setLoadingMessage("Analyzing customer data...");
-
-        // D. Fetch Customers
-        const customers = await fetchArray("customer", "customers");
+      // C. Fetch Customers
+       const customers = await fetchArray("customer", "customers");
         const now = new Date();
         const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
         const newThisMonth = customers.filter((c: Customer) => {
@@ -322,7 +319,7 @@ export default function BankDashboard() {
   // Prepare for UI
   const summaryCards = [
     {
-      icon: <Users className="w-8 h-8" />, 
+      icon: <Users className="w-11 h-11" />, 
       value: customersServed, 
       label:'Customers Served', 
       trend: "+8% from last month",
@@ -331,7 +328,7 @@ export default function BankDashboard() {
       iconColor: "text-red-300"
     },
     {
-      icon: <BarChart3 className="w-8 h-8" />, 
+      icon: <BarChart3 className="w-11 h-11" />, 
       value: reviewsCount, 
       label: "Reviews",
       trend: "+5% from last month",
@@ -340,7 +337,7 @@ export default function BankDashboard() {
       iconColor: "text-yellow-300"
     },
     {
-      icon: <TrendingUp className="w-8 h-8" />, 
+      icon: <TrendingUp className="w-11 h-11" />, 
       value:`${satisfactionRate}%`, 
       label: "Satisfaction",
       trend: "+1.2% from last month",
@@ -349,7 +346,7 @@ export default function BankDashboard() {
       iconColor: "text-green-300"
     },
     {
-      icon: <Users className="w-8 h-8" />, 
+      icon: <Users className="w-11 h-11" />, 
       value: newBankCustomers, 
       label: "New Customers",
       trend: "+0.5% from last month",
@@ -502,16 +499,16 @@ export default function BankDashboard() {
               {/* Language Dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center gap-2 cursor-pointer text-white hover:text-white/80 transition-colors bg-white/5 px-3 py-2 rounded-lg border border-white/20 hover:bg-white/10">
-                  <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-red-500 rounded-full" />
+                  <Image src={flag} alt="flag" width={24} height={24} className="rounded-full" />
                   <span className="font-medium text-sm">{language}</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl rounded-lg p-2">
                   <DropdownMenuItem onClick={() => changeLanguage("Eng (US)")} className="flex items-center gap-2 cursor-pointer text-white hover:bg-white/10 rounded px-3 py-2">
-                    <div className="w-5 h-5 bg-gradient-to-r from-blue-500 to-red-500 rounded-full" />
+                    <Image src="/flags/us.png" alt="English" width={20} height={20} className="rounded-full" />
                     Eng (US)
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => changeLanguage("Arabic")} className="flex items-center gap-2 cursor-pointer text-white hover:bg-white/10 rounded px-3 py-2">
-                    <div className="w-5 h-5 bg-gradient-to-r from-green-500 to-red-500 rounded-full" />
+                    <Image src="/flags/eg.png" alt="Arabic" width={20} height={20} className="rounded-full" />
                     Arabic
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -604,7 +601,7 @@ export default function BankDashboard() {
                     </div>
                   </div>
                   <p className="text-3xl font-bold text-white mb-1">{c.value}</p>
-                  <p className="text-white/80 text-lg font-medium mb-2">{c.label}</p>
+                  <p className="text-white font-extrabold text-2xl mb-2">{c.label}</p>
                   <p className="text-sm text-white/60">{c.trend}</p>
                 </CardContent>
               </Card>
@@ -624,11 +621,17 @@ export default function BankDashboard() {
                   <Tooltip 
                     formatter={(value, name) => [`${value}%`, name]} 
                     contentStyle={{
-                      backgroundColor: "rgba(0,0,0,0.8)",
-                      borderRadius: "8px",
-                      border: "1px solid rgba(255,255,255,0.2)",
-                      color: "white"
+                      backgroundColor: "rgba(255,255,255,0.95)",
+                      borderRadius: "12px",
+                      border: "1.5px solid #e0e0e0",
+                      color: "#222",
+                      fontWeight: 700,
+                      fontSize: "1.25rem",
+                      boxShadow: "0 4px 16px rgba(0,0,0,0.10)",
+                      padding: "1rem 2rem",
+                      textAlign: "center"
                     }}
+                    itemStyle={{ color: '#222', fontWeight: 700, fontSize: '1.1rem' }}
                   />
                   <Pie
                     data={pieDataFraud}
@@ -672,11 +675,17 @@ export default function BankDashboard() {
                   <Tooltip 
                     formatter={(value, name) => [`${value}%`, name]} 
                     contentStyle={{
-                      backgroundColor: "rgba(0,0,0,0.8)",
-                      borderRadius: "8px",
-                      border: "1px solid rgba(255,255,255,0.2)",
-                      color: "white"
+                      backgroundColor: "rgba(255,255,255,0.95)",
+                      borderRadius: "12px",
+                      border: "1.5px solid #e0e0e0",
+                      color: "#222",
+                      fontWeight: 700,
+                      fontSize: "1.25rem",
+                      boxShadow: "0 4px 16px rgba(0,0,0,0.10)",
+                      padding: "1rem 2rem",
+                      textAlign: "center"
                     }}
+                    itemStyle={{ color: '#222', fontWeight: 700, fontSize: '1.1rem' }}
                   />
                   <Pie
                     data={pieDataChurn}
@@ -707,72 +716,6 @@ export default function BankDashboard() {
                 <p className="text-2xl font-bold text-blue-400">{churnRate}%</p>
                 <p className="text-sm text-white/60">Churn Prediction Rate</p>
               </div>
-            </Card>
-          </div>
-
-          {/* Enhanced Performance Insights */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            <Card className="bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-400/30 backdrop-blur-xl">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-blue-500/30 rounded-xl">
-                    <DollarSign className="w-6 h-6 text-blue-300" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-white">Revenue Impact</h3>
-                    <p className="text-sm text-blue-200">
-                      {satisfactionRate >= 80 
-                        ? "High satisfaction driving revenue growth"
-                        : satisfactionRate >= 60
-                        ? "Moderate satisfaction levels maintained"
-                        : "Satisfaction improvement needed for revenue"
-                      }
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-green-400/30 backdrop-blur-xl">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-green-500/30 rounded-xl">
-                    <Shield className="w-6 h-6 text-green-300" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-white">Security Status</h3>
-                    <p className="text-sm text-green-200">
-                      {fraudRate <= 5 
-                        ? "Excellent fraud detection performance"
-                        : fraudRate <= 10
-                        ? "Good security measures in place"
-                        : "Enhanced security protocols recommended"
-                      }
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-400/30 backdrop-blur-xl">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-purple-500/30 rounded-xl">
-                    <TrendingUp className="w-6 h-6 text-purple-300" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-white">Customer Retention</h3>
-                    <p className="text-sm text-purple-200">
-                      {churnRate <= 10
-                        ? "Excellent customer retention rates"
-                        : churnRate <= 20
-                        ? "Good customer loyalty maintained"
-                        : "Focus on retention strategies needed"
-                      }
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
             </Card>
           </div>
 

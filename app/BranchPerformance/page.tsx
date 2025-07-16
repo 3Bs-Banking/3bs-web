@@ -444,7 +444,7 @@ export default function BranchPerformance() {
                     <div className="flex flex-col space-y-3">
                       {role !== "Manager" && (
                       <button 
-                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                         onClick={() => router.push("/BankPerformance")}
                       >
                         <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
@@ -453,14 +453,14 @@ export default function BranchPerformance() {
                         <span className="font-medium">Bank Performance</span>
                       </button>
                       )}
-                      <button className="text-left bg-gradient-to-r from-orange-600 to-red-600 text-white p-3 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3">
+                      <button className="text-left bg-gradient-to-r from-orange-600 to-red-600 text-white p-3 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3 cursor-pointer">
                        <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
                          🏢
                        </div>
                        <span className="font-bold">Branch Perfomance</span>
                      </button>
                       <button 
-                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                         onClick={() => router.push("/EmployeePerformance")}
                       >
                         <div className="w-8 h-8 bg-yellow-500/20 rounded-lg flex items-center justify-center group-hover:bg-yellow-500/30 transition-colors">
@@ -470,7 +470,7 @@ export default function BranchPerformance() {
                       </button>
                       {role !== "Manager" && (
                       <button 
-                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                         onClick={() => router.push("/GiveAccess")}
                       >
                         <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
@@ -480,7 +480,7 @@ export default function BranchPerformance() {
                       </button>
                       )}
                       <button 
-                       className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                       className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                        onClick={() => router.push("/TempAcess")}
                      >
                        <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
@@ -489,7 +489,7 @@ export default function BranchPerformance() {
                        <span className="font-medium">Temporary Access</span>
                      </button> 
                       <button 
-                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                         onClick={() => router.push("/settings")}
                       >
                         <div className="w-8 h-8 bg-gray-500/20 rounded-lg flex items-center justify-center group-hover:bg-gray-500/30 transition-colors">
@@ -511,7 +511,7 @@ export default function BranchPerformance() {
                           console.error("Logout failed:", err);
                         }
                       }}
-                      className="mt-6 w-full text-left p-3 text-red-400 hover:bg-red-500/20 rounded-xl cursor-pointer transition-all duration-300 flex items-center gap-3 group"
+                      className="mt-6 w-full text-left p-3 text-red-400 hover:bg-red-500/20 rounded-xl cursor-pointer transition-all duration-300 flex items-center gap-3 group cursor-pointer"
                     >
                       <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center group-hover:bg-red-500/30 transition-colors">
                         🔓
@@ -663,7 +663,7 @@ export default function BranchPerformance() {
                   <div className="flex items-center justify-between mb-2">
                     <Activity className="w-8 h-8 text-blue-400" />
                   </div>
-                  <p className="text-sm text-white/80 font-medium">Total Tasks Completed</p>
+                  <p className="text-xl font-bold text-white mb-1">Total Tasks Completed</p>
                   <p className="text-3xl font-bold text-blue-400 my-2">{tasksCompleted}</p>
                   <p className="text-xs text-white/60">{monthNames[selectedMonth]} {selectedYear}</p>
                 </CardContent>
@@ -674,7 +674,7 @@ export default function BranchPerformance() {
                   <div className="flex items-center justify-between mb-2">
                     <Clock className="w-8 h-8 text-green-400" />
                   </div>
-                  <p className="text-sm text-white/80 font-medium">Average Queue Time</p>
+                  <p className="text-xl font-bold text-white mb-1">Average Appointment Time</p>
                   <p className="text-3xl font-bold text-green-400 my-2">{avgQueueTime}</p>
                   <p className="text-xs text-white/60">{monthNames[selectedMonth]} average</p>
                 </CardContent>
@@ -685,7 +685,7 @@ export default function BranchPerformance() {
                   <div className="flex items-center justify-between mb-2">
                     <Users className="w-8 h-8 text-purple-400" />
                   </div>
-                  <p className="text-sm text-white/80 font-medium">Customer Traffic</p>
+                  <p className="text-xl font-bold text-white mb-1">Customer Traffic</p>
                   <p className="text-3xl font-bold text-purple-400 my-2">{footfall}/day</p>
                   <p className="text-xs text-white/60">Daily average</p>
                 </CardContent>
@@ -696,7 +696,7 @@ export default function BranchPerformance() {
                   <div className="flex items-center justify-between mb-2">
                     <TrendingUp className="w-8 h-8 text-orange-400" />
                   </div>
-                  <p className="text-sm text-white/80 font-medium">Service Deviation</p>
+                  <p className="text-xl font-bold text-white mb-1">Service Deviation</p>
                   <p className="text-3xl font-bold text-orange-400 my-2">{serviceDeviation}%</p>
                   <p className="text-xs text-white/60">{monthNames[selectedMonth]} average</p>
                 </CardContent>
@@ -707,7 +707,7 @@ export default function BranchPerformance() {
                   <div className="flex items-center justify-between mb-2">
                     <Shield className="w-8 h-8 text-red-400" />
                   </div>
-                  <p className="text-sm text-white/80 font-medium">Resolution Rating</p>
+                  <p className="text-xl font-bold text-white mb-1">Resolution Rating</p>
                   <p className="text-3xl font-bold text-red-400 my-2">{timeResolutionRating}%</p>
                   <p className="text-xs text-white/60">{monthNames[selectedMonth]} average</p>
                 </CardContent>
@@ -718,7 +718,7 @@ export default function BranchPerformance() {
                   <div className="flex items-center justify-between mb-2">
                     <BarChart3 className="w-8 h-8 text-indigo-400" />
                   </div>
-                  <p className="text-sm text-white/80 font-medium">Efficiency Score</p>
+                  <p className="text-xl font-bold text-white mb-1">Efficiency Score</p>
                   <p className="text-3xl font-bold text-indigo-400 my-2">{efficiencyScore}%</p>
                   <p className="text-xs text-white/60">{monthNames[selectedMonth]} average</p>
                 </CardContent>

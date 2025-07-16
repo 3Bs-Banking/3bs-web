@@ -4,7 +4,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// Badge component removed - using custom styling instead
 import { Bell, Search, TrendingUp, TrendingDown, Clock, CheckCircle, Filter, Download, Eye, Shield, BarChart3, Activity, Zap } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Progress } from "@/components/ui/progress";
@@ -48,7 +47,6 @@ export default function EnhancedEmployeePerformance() {
   const [loading, setLoading] = useState(true);
   const [loadingMessage, setLoadingMessage] = useState("Initializing...");
 
-  // Performance thresholds
   const getPerformanceLevel = (tasks: number, avgMinutes: number): "high" | "medium" | "low" => {
     if (tasks >= 15 && avgMinutes <= 35) return "high";
     if (tasks >= 5 && avgMinutes <= 50) return "medium";
@@ -73,7 +71,6 @@ export default function EnhancedEmployeePerformance() {
         setLoading(true);
         setLoadingMessage("Loading user profile...");
 
-        // Fetch user data
         const userRes = await fetch("http://localhost:5000/api/user", {
           credentials: "include",
         });
@@ -89,14 +86,12 @@ export default function EnhancedEmployeePerformance() {
 
         setLoadingMessage("Loading bank information...");
 
-        // Fetch bank data
         const bankRes = await fetchAPI("bank");
         const bank = bankRes.data?.banks?.[0]?.name || "Unnamed Bank";
         setBankName(bank);
 
         setLoadingMessage("Loading employee data...");
 
-        // Fetch employees and appointments
         const [empRes, apptRes] = await Promise.all([
           fetchAPI("employee"),
           fetchAPI("appointment"),
@@ -142,7 +137,6 @@ export default function EnhancedEmployeePerformance() {
         setLoadingMessage("Finalizing dashboard...");
         setEmployees(calculated);
 
-        // Add a delay for smooth transition
         setTimeout(() => {
           setLoading(false);
         }, 500);
@@ -169,7 +163,6 @@ export default function EnhancedEmployeePerformance() {
     }
   };
 
-  // Filter and sort employees
   const filteredEmployees = employees
     .filter((employee) => {
       const matchesSearch = employee.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -192,20 +185,17 @@ export default function EnhancedEmployeePerformance() {
       return sortOrder === "asc" ? comparison : -comparison;
     });
 
-  // Pagination
   const totalPages = Math.ceil(filteredEmployees.length / ITEMS_PER_PAGE);
   const displayedEmployees = filteredEmployees.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
 
-  // Performance statistics
   const totalEmployees = employees.length;
   const highPerformers = employees.filter(e => e.performance === "high").length;
   const avgTasks = employees.length > 0 ? Math.round(employees.reduce((sum, e) => sum + e.tasks, 0) / employees.length) : 0;
   const avgEfficiency = employees.length > 0 ? Math.round(employees.reduce((sum, e) => sum + e.efficiency, 0) / employees.length) : 0;
 
-  // Enhanced Loading Screen Component
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -487,7 +477,7 @@ export default function EnhancedEmployeePerformance() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-blue-200 text-sm font-medium">Total Employees</p>
+                    <p className="text-xl font-bold text-blue-200 mb-1">Total Employees</p>
                     <p className="text-3xl font-bold">{totalEmployees}</p>
                   </div>
                   <div className="p-3 bg-blue-500/30 rounded-xl">
@@ -501,7 +491,7 @@ export default function EnhancedEmployeePerformance() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-green-200 text-sm font-medium">High Performers</p>
+                    <p className="text-xl font-bold text-green-200 mb-1">High Performers</p>
                     <p className="text-3xl font-bold">{highPerformers}</p>
                   </div>
                   <div className="p-3 bg-green-500/30 rounded-xl">
@@ -515,7 +505,7 @@ export default function EnhancedEmployeePerformance() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-purple-200 text-sm font-medium">Avg Tasks/Employee</p>
+                    <p className="text-xl font-bold text-purple-200 mb-1">Avg Tasks /Employee</p>
                     <p className="text-3xl font-bold">{avgTasks}</p>
                   </div>
                   <div className="p-3 bg-purple-500/30 rounded-xl">
@@ -529,7 +519,7 @@ export default function EnhancedEmployeePerformance() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-orange-200 text-sm font-medium">Avg Efficiency</p>
+                    <p className="text-xl font-bold text-orange-200 mb-1">Avg Efficiency</p>
                     <p className="text-3xl font-bold">{avgEfficiency}%</p>
                   </div>
                   <div className="p-3 bg-orange-500/30 rounded-xl">

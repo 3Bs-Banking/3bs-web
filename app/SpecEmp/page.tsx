@@ -481,7 +481,7 @@ export default function EnhancedSpecEmp() {
           <User className="w-16 h-16 mx-auto mb-4 text-white/60" />
           <p className="text-lg font-semibold mb-2">No employee selected</p>
           <p className="text-white/70 mb-4">Redirecting to employee list...</p>
-          <Button onClick={() => router.push("/EmployeePerformance")} className="bg-purple-600 hover:bg-purple-700">
+          <Button onClick={() => router.push("/EmployeePerformance")} className="bg-purple-600 hover:bg-purple-700 cursor-pointer">
             Go to Employee List
           </Button>
         </div>
@@ -533,7 +533,7 @@ export default function EnhancedSpecEmp() {
                     <div className="flex flex-col space-y-3">
                       {role !== "Manager" && (
                         <button 
-                          className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                          className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                           onClick={() => router.push("/BankPerformance")}
                         >
                           <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
@@ -543,7 +543,7 @@ export default function EnhancedSpecEmp() {
                         </button>
                       )}
                       <button 
-                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                         onClick={() => router.push("/BranchPerformance")}
                       >
                         <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center group-hover:bg-green-500/30 transition-colors">
@@ -551,7 +551,7 @@ export default function EnhancedSpecEmp() {
                         </div>
                         <span className="font-medium">Branch Performance</span>
                       </button>
-                      <button className="text-left bg-gradient-to-r from-orange-600 to-red-600 text-white p-3 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3">
+                      <button className="text-left bg-gradient-to-r from-orange-600 to-red-600 text-white p-3 rounded-xl cursor-pointer shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3 cursor-pointer">
                        <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
                          👨‍💼
                        </div>
@@ -559,7 +559,7 @@ export default function EnhancedSpecEmp() {
                      </button>
                       {role !== "Manager" && (
                         <button 
-                          className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                          className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                           onClick={() => router.push("/GiveAccess")}
                         >
                           <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
@@ -569,7 +569,7 @@ export default function EnhancedSpecEmp() {
                         </button>
                       )}
                        <button 
-                       className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                       className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                        onClick={() => router.push("/TempAcess")}
                      >
                        <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
@@ -578,7 +578,7 @@ export default function EnhancedSpecEmp() {
                        <span className="font-medium">Temporary Access</span>
                      </button>
                       <button 
-                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3"
+                        className="text-left hover:bg-white/10 p-3 rounded-xl cursor-pointer transition-all duration-300 text-white/90 hover:text-white group flex items-center gap-3 cursor-pointer"
                         onClick={() => router.push("/settings")}
                       >
                         <div className="w-8 h-8 bg-gray-500/20 rounded-lg flex items-center justify-center group-hover:bg-gray-500/30 transition-colors">
@@ -600,7 +600,7 @@ export default function EnhancedSpecEmp() {
                           console.error("Logout failed:", err);
                         }
                       }}
-                      className="mt-6 w-full text-left p-3 text-red-400 hover:bg-red-500/20 rounded-xl cursor-pointer transition-all duration-300 flex items-center gap-3 group"
+                      className="mt-6 w-full text-left p-3 text-red-400 hover:bg-red-500/20 rounded-xl cursor-pointer transition-all duration-300 flex items-center gap-3 group cursor-pointer"
                     >
                       <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center group-hover:bg-red-500/30 transition-colors">
                         🔓
@@ -617,7 +617,7 @@ export default function EnhancedSpecEmp() {
               <Button 
                 variant="outline" 
                 onClick={() => router.push("/EmployeePerformance")}
-                className="gap-2 bg-white/10 border-white/20 text-white hover:bg-white/20 transition-all duration-300"
+                className="gap-2 bg-white/10 border-white/20 text-white hover:bg-white/20 transition-all duration-300 cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back to Employees
@@ -787,7 +787,7 @@ export default function EnhancedSpecEmp() {
                   )}
                 </div>
                 <div className="flex gap-3">
-                  <Button variant="outline" className="gap-2 bg-white/10 border-white/20 text-white hover:bg-white/20">
+                  <Button variant="outline" className="gap-2 bg-white/10 border-white/20 text-white hover:bg-white/20 cursor-pointer">
                     <Download className="w-4 h-4" />
                     Export
                   </Button>
@@ -798,7 +798,7 @@ export default function EnhancedSpecEmp() {
 
           {/* Enhanced Performance Overview Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/15 transition-all duration-300 transform hover:scale-105">
+            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/15 transition-all duration-300 transform hover:scale-105 cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
@@ -811,7 +811,7 @@ export default function EnhancedSpecEmp() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/15 transition-all duration-300 transform hover:scale-105">
+            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/15 transition-all duration-300 transform hover:scale-105 cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
@@ -824,7 +824,7 @@ export default function EnhancedSpecEmp() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/15 transition-all duration-300 transform hover:scale-105">
+            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/15 transition-all duration-300 transform hover:scale-105 cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
@@ -837,11 +837,11 @@ export default function EnhancedSpecEmp() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/15 transition-all duration-300 transform hover:scale-105">
+            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/15 transition-all duration-300 transform hover:scale-105 cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-orange-200 text-sm font-medium">Efficiency Score</p>
+                    <p className="text-orange-200 text-sm font-medium">Time resolution rating</p>
                     <p className="text-3xl font-bold">{performanceMetrics.efficiencyScore}%</p>
                     <p className="text-orange-200 text-xs">Overall</p>
                   </div>
@@ -854,7 +854,7 @@ export default function EnhancedSpecEmp() {
           {/* Enhanced Charts Row 1 */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             {/* Response Time Analysis */}
-            <Card className="col-span-2 bg-white/10 backdrop-blur-xl border border-white/20">
+            <Card className="col-span-2 bg-white/10 backdrop-blur-xl border border-white/20 cursor-pointer">
               <CardHeader className="border-b border-white/20">
                 <CardTitle className="flex items-center gap-2 text-white">
                   <TrendingUp className="w-5 h-5" />
@@ -894,7 +894,7 @@ export default function EnhancedSpecEmp() {
             </Card>
 
             {/* Customer Satisfaction Pie Chart */}
-            <Card className="bg-white/10 backdrop-blur-xl border border-white/20">
+            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 cursor-pointer">
               <CardHeader className="border-b border-white/20">
                 <CardTitle className="text-white">Average Customer Satisfaction</CardTitle>
               </CardHeader>
@@ -956,7 +956,7 @@ export default function EnhancedSpecEmp() {
           {/* Enhanced Charts Row 2 */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             {/* Service Volume */}
-            <Card className="bg-white/10 backdrop-blur-xl border border-white/20">
+            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 cursor-pointer">
               <CardHeader className="border-b border-white/20">
                 <CardTitle className="text-white">Service Volume</CardTitle>
                 <CustomLegend color="#ff6384" label="Tasks Completed" />
@@ -989,7 +989,7 @@ export default function EnhancedSpecEmp() {
             </Card>
 
             {/* CSAT Trends */}
-            <Card className="bg-white/10 backdrop-blur-xl border border-white/20">
+            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 cursor-pointer">
               <CardHeader className="border-b border-white/20">
                 <CardTitle className="text-white">CSAT Trends</CardTitle>
                 <CustomLegend color="#4ECDC4" label="Customer Satisfaction" />
@@ -1023,7 +1023,7 @@ export default function EnhancedSpecEmp() {
             </Card>
 
             {/* Handling Time vs Benchmark */}
-            <Card className="bg-white/10 backdrop-blur-xl border border-white/20">
+            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 cursor-pointer">
               <CardHeader className="border-b border-white/20">
                 <CardTitle className="text-white">Performance vs Benchmark</CardTitle>
                 <div className="flex gap-4">
@@ -1081,14 +1081,14 @@ export default function EnhancedSpecEmp() {
           </div>
 
           {/* Enhanced Detailed Performance Table */}
-          <Card className="bg-white/10 backdrop-blur-xl border border-white/20">
+          <Card className="bg-white/10 backdrop-blur-xl border border-white/20 cursor-pointer">
             <CardHeader className="border-b border-white/20">
               <div className="flex justify-between items-center">
                 <CardTitle className="text-white">Detailed Performance Records</CardTitle>
                 <div className="flex gap-3">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="outline" className="gap-2 bg-white/10 border-white/20 text-white hover:bg-white/20 transition-all duration-300">
+                      <Button variant="outline" className="gap-2 bg-white/10 border-white/20 text-white hover:bg-white/20 transition-all duration-300 cursor-pointer">
                         <Filter className="w-4 h-4" />
                         Filter: {filterType === "all" ? "All Records" : 
                                  filterType === "excellent" ? "Excellent" :
@@ -1134,7 +1134,7 @@ export default function EnhancedSpecEmp() {
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                  <Button variant="outline" className="gap-2 bg-white/10 border-white/20 text-white hover:bg-white/20 transition-all duration-300">
+                  <Button variant="outline" className="gap-2 bg-white/10 border-white/20 text-white hover:bg-white/20 transition-all duration-300 cursor-pointer">
                     <Download className="w-4 h-4" />
                     Export
                   </Button>
@@ -1150,7 +1150,6 @@ export default function EnhancedSpecEmp() {
                       <th className="p-4 text-left text-white/90 font-semibold">Service</th>
                       <th className="p-4 text-left text-white/90 font-semibold">Handling Time</th>
                       <th className="p-4 text-left text-white/90 font-semibold">Customer Rating</th>
-                      <th className="p-4 text-left text-white/90 font-semibold">Performance</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1204,21 +1203,6 @@ export default function EnhancedSpecEmp() {
                             )}
                           </div>
                         </td>
-                        <td className="p-4">
-                          {typeof entry.rating === "number" && entry.rating >= 4 && entry.handlingMinutes <= 35 ? (
-                            <span className="bg-green-500/20 text-green-300 px-3 py-1 rounded-full text-xs font-medium border border-green-400/30">
-                              Excellent
-                            </span>
-                          ) : typeof entry.rating === "number" && entry.rating >= 3 && entry.handlingMinutes <= 50 ? (
-                            <span className="bg-yellow-500/20 text-yellow-300 px-3 py-1 rounded-full text-xs font-medium border border-yellow-400/30">
-                              Good
-                            </span>
-                          ) : (
-                            <span className="bg-red-500/20 text-red-300 px-3 py-1 rounded-full text-xs font-medium border border-red-400/30">
-                              Needs Improvement
-                            </span>
-                          )}
-                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -1254,7 +1238,7 @@ export default function EnhancedSpecEmp() {
 
           {/* Enhanced Performance Insights */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-            <Card className="bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-400/30 backdrop-blur-xl">
+            <Card className="bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-400/30 backdrop-blur-xl cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
                   <div className="p-3 bg-blue-500/30 rounded-xl">
@@ -1275,7 +1259,7 @@ export default function EnhancedSpecEmp() {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 border border-orange-400/30 backdrop-blur-xl">
+            <Card className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 border border-orange-400/30 backdrop-blur-xl cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
                   <div className="p-3 bg-orange-500/30 rounded-xl">
@@ -1296,7 +1280,7 @@ export default function EnhancedSpecEmp() {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-green-400/30 backdrop-blur-xl">
+            <Card className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-green-400/30 backdrop-blur-xl cursor-pointer">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
                   <div className="p-3 bg-green-500/30 rounded-xl">
@@ -1319,7 +1303,7 @@ export default function EnhancedSpecEmp() {
           </div>
 
           {/* Enhanced Analytics Summary */}
-          <Card className="mt-6 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30 backdrop-blur-xl">
+          <Card className="mt-6 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30 backdrop-blur-xl cursor-pointer">
             <CardContent className="p-6">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-purple-500/30 rounded-xl flex items-center justify-center">
@@ -1343,7 +1327,7 @@ export default function EnhancedSpecEmp() {
           {/* Enhanced Quick Actions */}
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Button 
-              className="bg-blue-500/20 hover:bg-blue-500/30 border border-blue-400/30 text-white transition-all duration-300 p-4 h-auto flex flex-col gap-2"
+              className="bg-blue-500/20 hover:bg-blue-500/30 border border-blue-400/30 text-white transition-all duration-300 p-4 h-auto flex flex-col gap-2 cursor-pointer"
               onClick={() => setFilterType("excellent")}
             >
               <Award className="w-6 h-6" />
@@ -1352,7 +1336,7 @@ export default function EnhancedSpecEmp() {
             </Button>
             
             <Button 
-              className="bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-400/30 text-white transition-all duration-300 p-4 h-auto flex flex-col gap-2"
+              className="bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-400/30 text-white transition-all duration-300 p-4 h-auto flex flex-col gap-2 cursor-pointer"
               onClick={() => setFilterType("needs-improvement")}
             >
               <Target className="w-6 h-6" />
@@ -1361,7 +1345,7 @@ export default function EnhancedSpecEmp() {
             </Button>
             
             <Button 
-              className="bg-green-500/20 hover:bg-green-500/30 border border-green-400/30 text-white transition-all duration-300 p-4 h-auto flex flex-col gap-2"
+              className="bg-green-500/20 hover:bg-green-500/30 border border-green-400/30 text-white transition-all duration-300 p-4 h-auto flex flex-col gap-2 cursor-pointer"
               onClick={() => setTimeframe("Last Month")}
             >
               <Calendar className="w-6 h-6" />
@@ -1370,7 +1354,7 @@ export default function EnhancedSpecEmp() {
             </Button>
             
             <Button 
-              className="bg-purple-500/20 hover:bg-purple-500/30 border border-purple-400/30 text-white transition-all duration-300 p-4 h-auto flex flex-col gap-2"
+              className="bg-purple-500/20 hover:bg-purple-500/30 border border-purple-400/30 text-white transition-all duration-300 p-4 h-auto flex flex-col gap-2 cursor-pointer"
               onClick={() => router.push("/EmployeePerformance")}
             >
               <Activity className="w-6 h-6" />

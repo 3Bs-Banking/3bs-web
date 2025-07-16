@@ -16,7 +16,6 @@ import { useRouter } from "next/navigation";
 import TopBarSearch from "@/components/ui/TopBarSearch";
 import { fetchAPI } from "@/utils/fetchAPI";
 
-// Real API functions for temporary access
 const temporaryAccessAPI = {
   checkEmployee: async (employeeId: string) => {
     const response = await fetch(`http://localhost:5000/api/user/employee/${employeeId}`, {
@@ -53,7 +52,6 @@ const temporaryAccessAPI = {
   }
 };
 
-// Update the checkEmployeeExists function to use the access-management API and EmployeeInfo structure from GiveAccess
 const accessAPI = {
   checkEmployee: async (employeeId: string) => {
     const response = await fetch(`http://localhost:5000/api/access-management/check/${employeeId}`, {
@@ -63,7 +61,6 @@ const accessAPI = {
   }
 };
 
-// Update EmployeeInfo interface to match GiveAccess
 interface EmployeeInfo {
   id: string;
   fullName: string;
@@ -78,22 +75,19 @@ interface EmployeeInfo {
 export default function TemporaryAccessPage() {
   const router = useRouter();
 
-  // User state
-const [firstName, setFirstName] = useState<string>("");
-const [lastName, setLastName] = useState<string>("");
-const [role, setRole] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [role, setRole] = useState<string>("");
   const [language, setLanguage] = useState<string>("English (US)");
   const [notifications, setNotifications] = useState<string[]>(["Temporary access request pending", "New security alert"]);
   const [flag, setFlag] = useState<string>("/flags/us.png");
   const [bankName, setBankName] = useState<string>("Loading...");
 
-  // Loading states
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingMessage, setLoadingMessage] = useState<string>("Initializing...");
   const [checkingEmployee, setCheckingEmployee] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
 
-  // Form states
   const [employeeId, setEmployeeId] = useState<string>("");
   const [employeeInfo, setEmployeeInfo] = useState<EmployeeInfo | null>(null);
   const [expirationDate, setExpirationDate] = useState<string>("");
@@ -101,11 +95,9 @@ const [role, setRole] = useState<string>("");
   const [adminPassword, setAdminPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  // Feedback states
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
 
-  // Add state for password verification
   const [passwordVerified, setPasswordVerified] = useState<boolean>(false);
   const [verifyingPassword, setVerifyingPassword] = useState<boolean>(false);
   const [verificationStatus, setVerificationStatus] = useState<"idle" | "success" | "error">("idle");
@@ -121,7 +113,6 @@ const [role, setRole] = useState<string>("");
     }
   };
 
-  // Replace the checkEmployeeExists function
   const checkEmployeeExists = async (empId: string) => {
     if (!empId || empId.length < 3) {
       setEmployeeInfo(null);
@@ -152,7 +143,6 @@ const [role, setRole] = useState<string>("");
     }
   };
 
-  // Form submission with real API
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -171,7 +161,6 @@ const [role, setRole] = useState<string>("");
       return;
     }
 
-    // Validate expiration is in the future
     const expirationDateTime = new Date(`${expirationDate}T${expirationTime}`);
     if (expirationDateTime <= new Date()) {
       setError("Expiration date and time must be in the future");
@@ -219,7 +208,6 @@ const [role, setRole] = useState<string>("");
     setVerificationMessage("");
   };
 
-  // Add password verification API call
   const verifyPassword = async () => {
     setVerifyingPassword(true);
     setVerificationStatus("idle");
@@ -250,8 +238,6 @@ const [role, setRole] = useState<string>("");
     }
   };
 
-  // Replace the initialization useEffect with this updated version
-
 useEffect(() => {
   const initializeApp = async () => {
     try {
@@ -272,18 +258,15 @@ useEffect(() => {
       const user = data?.data?.user;
 
       if (user) {
-        // Set first name and last name from database
         if (user.firstName && user.lastName) {
           setFirstName(user.firstName);
           setLastName(user.lastName);
         } else if (user.fullName) {
-          // Fallback: split fullName if firstName/lastName not available
           const [first, ...rest] = user.fullName.split(" ");
           setFirstName(first);
           setLastName(rest.join(" "));
         }
 
-        // Set role from database
         if (user.role) {
           setRole(user.role);
         }
@@ -315,7 +298,6 @@ useEffect(() => {
 
 
 
-  // Auto-check employee when ID changes (debounced)
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       checkEmployeeExists(employeeId);
@@ -324,13 +306,11 @@ useEffect(() => {
     return () => clearTimeout(timeoutId);
   }, [employeeId]);
 
-  // Generate minimum date (current date)
   const getMinDate = () => {
     const now = new Date();
     return now.toISOString().split('T')[0];
   };
 
-  // Generate minimum time for today
   const getMinTime = () => {
     const now = new Date();
     if (expirationDate === getMinDate()) {
@@ -340,7 +320,6 @@ useEffect(() => {
     return "00:00";
   };
 
-  // Enhanced Loading Screen
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">

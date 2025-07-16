@@ -389,7 +389,7 @@ export default function Welcome() {
                   onClick={prevSlide} 
                   onMouseEnter={() => setIsAutoPlay(false)}
                   onMouseLeave={() => setIsAutoPlay(true)}
-                  className="group bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-full shadow-2xl hover:bg-white/20 transition-all duration-300 hover:scale-110"
+                  className="group bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-full shadow-2xl hover:bg-white/20 transition-all duration-300 hover:scale-110 cursor-pointer"
                 >
                   <ChevronLeft size={32} className="text-white group-hover:text-purple-300 transition-colors" />
                 </button>
@@ -452,7 +452,7 @@ export default function Welcome() {
                   onClick={nextSlide}
                   onMouseEnter={() => setIsAutoPlay(false)}
                   onMouseLeave={() => setIsAutoPlay(true)}
-                  className="group bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-full shadow-2xl hover:bg-white/20 transition-all duration-300 hover:scale-110"
+                  className="group bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-full shadow-2xl hover:bg-white/20 transition-all duration-300 hover:scale-110 cursor-pointer"
                 >
                   <ChevronRight size={32} className="text-white group-hover:text-purple-300 transition-colors" />
                 </button>
